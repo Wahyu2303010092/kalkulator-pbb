@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator PBB</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(100% - 20px);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result, .explanation {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .result {
+            font-size: 18px;
+            color: #333;
+        }
+        .explanation {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator PBB</h1>
+        <p>Masukkan dua bilangan untuk menghitung Pembagi Besar Bersama (PBB):</p>
+        <input type="number" id="number1" placeholder="Bilangan pertama">
+        <input type="number" id="number2" placeholder="Bilangan kedua">
+        <button onclick="calculatePBB()">Hitung PBB</button>
+        <div class="result" id="result"></div>
+        <div class="explanation" id="explanation"></div>
+    </div>
+
+    <script>
+        function calculatePBB() {
+            const num1 = parseInt(document.getElementById("number1").value);
+            const num2 = parseInt(document.getElementById("number2").value);
+
+            if (isNaN(num1) || isNaN(num2) || num1 <= 0 || num2 <= 0) {
+                document.getElementById("result").innerHTML = "Masukkan bilangan bulat positif yang valid!";
+                document.getElementById("explanation").innerHTML = "";
+                return;
+            }
+
+            // Algoritma Euclid untuk menghitung PBB
+            let a = num1, b = num2;
+            const steps = [];
+            while (b !== 0) {
+                const remainder = a % b;
+                steps.push(`${a} mod ${b} = ${remainder}`);
+                a = b;
+                b = remainder;
+            }
+
+            // Menampilkan hasil dan penjelasan
+            document.getElementById("result").innerHTML = `PBB dari ${num1} dan ${num2} adalah: <strong>${a}</strong>`;
+            document.getElementById("explanation").innerHTML = `
+                <h3>Penjelasan (Algoritma Euclid):</h3>
+                <p>Langkah-langkah:</p>
+                <ul>
+                    ${steps.map(step => `<li>${step}</li>`).join("")}
+                </ul>
+                <p><strong>Hasil akhirnya:</strong> PBB = ${a}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
